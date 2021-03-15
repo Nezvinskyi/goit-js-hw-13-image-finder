@@ -1,13 +1,15 @@
 GoIT-JS-HW-13-image-finder
 
 tasks:
-* create search form
+* render search form
 - search form: input or submit?
-* create gallery
-* create image card
-- material icons
+* render gallery
+- pagination
 * loadmore button
+* render image card
+- material icons
 
 * notifications
 * modal window
 * infinite scroll
+* trim
