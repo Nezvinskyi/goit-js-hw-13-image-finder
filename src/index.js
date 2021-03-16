@@ -5,6 +5,7 @@ import galleryTpl from './js/templates/gallery.hbs';
 import LoadMoreBtn from './js/components/load-more-btn';
 import * as basicLightbox from 'basiclightbox';
 import 'basiclightbox/dist/basicLightbox.min.css';
+import errorNotification from './js/components/notifications';
 
 const refs = getRefs();
 const imagesApiService = new ImagesApiService();
@@ -16,14 +17,6 @@ const loadMoreBtn = new LoadMoreBtn({
 refs.searchForm.addEventListener('submit', onSearch);
 loadMoreBtn.refs.button.addEventListener('click', onLoadMore);
 refs.gallery.addEventListener('click', onGalleryClick);
-//
-// async function tempoFuncCSS() {
-//   imagesApiService.query = 'sex';
-//   const images = await imagesApiService.fetchImages();
-//   renderGallery(images);
-// }
-// tempoFuncCSS();
-//
 
 async function onSearch(event) {
   event.preventDefault();
@@ -55,6 +48,10 @@ async function fetchImages() {
 }
 
 function renderGallery(images) {
+  if (images.length === 0) {
+    errorNotification();
+    return;
+  }
   refs.gallery.insertAdjacentHTML('beforeend', galleryTpl(images));
 }
 

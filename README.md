@@ -2,11 +2,11 @@ GoIT-JS-HW-13-image-finder
 
 tasks:
 
-* notifications
-* infinite scroll
-* consolidate refs
-* soft scroll on load more 
+- infinite scroll
+- consolidate refs
 
++ notifications
++ smooth scroll on load more 
 + render image card
 + modal window
 + render search form

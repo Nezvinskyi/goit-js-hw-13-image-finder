@@ -1,18 +1,12 @@
 {{#each this}}
 <li>
 	<div class="gallery__item">
-		{{!-- <a class="gallery__link" href="{{largeImageURL}}">
-			<img class="gallery__image" src="{{webformatURL}}" alt="photo: {{tags}}">
-		</a> --}}
-
 		<img class="gallery__link gallery__image" src="{{webformatURL}}"
 			data-largeImg="{{largeImageURL}}" alt="photo: {{tags}}">
 		<div class="stats">
 			<p class="stats-item">
 				<i class="material-icons">thumb_up</i>
 				<span class="stats-text"> {{likes}}</span>
-
-
 			</p>
 			<p class="stats-item">
 				<i class="material-icons"> visibility</i>
