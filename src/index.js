@@ -3,6 +3,8 @@ import ImagesApiService from './js/apiService';
 import getRefs from './js/get-refs';
 import galleryTpl from './js/templates/gallery.hbs';
 import LoadMoreBtn from './js/components/load-more-btn';
+import * as basicLightbox from 'basiclightbox';
+import 'basiclightbox/dist/basicLightbox.min.css';
 
 const refs = getRefs();
 const imagesApiService = new ImagesApiService();
@@ -12,8 +14,8 @@ const loadMoreBtn = new LoadMoreBtn({
 });
 
 refs.searchForm.addEventListener('submit', onSearch);
-loadMoreBtn.refs.button.addEventListener('click', fetchImages);
-
+loadMoreBtn.refs.button.addEventListener('click', onLoadMore);
+refs.gallery.addEventListener('click', onGalleryClick);
 //
 // async function tempoFuncCSS() {
 //   imagesApiService.query = 'sex';
@@ -37,6 +39,14 @@ async function onSearch(event) {
   repositionSearchForm();
 }
 
+async function onLoadMore() {
+  await fetchImages();
+  window.scrollBy({
+    top: screen.height - 250,
+    behavior: 'smooth',
+  });
+}
+
 async function fetchImages() {
   loadMoreBtn.disable();
   const images = await imagesApiService.fetchImages();
@@ -55,4 +65,12 @@ function clearGallery() {
 function repositionSearchForm() {
   refs.searchWrapper.classList.add('header');
   refs.logoContainer.classList.add('header');
+}
+
+function onGalleryClick(event) {
+  if (event.target.nodeName !== 'IMG') return;
+
+  const largeImgUrl = event.target.getAttribute('data-largeImg');
+  const instance = basicLightbox.create(`<img src="${largeImgUrl}" >`);
+  instance.show();
 }

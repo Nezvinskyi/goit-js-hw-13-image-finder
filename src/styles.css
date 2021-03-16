@@ -146,7 +146,7 @@ body {
 }
 
 .gallery__image {
-  height: 100%;
+  /* height: 100%; */
   width: 100%;
   object-fit: contain;
   transition: transform var(--animation-duration) var(--timing-function);
