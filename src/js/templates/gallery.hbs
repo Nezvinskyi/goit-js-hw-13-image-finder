@@ -1,5 +1,8 @@
 {{#each this}}
 <li>
-	<img src="{{webformatURL}}" alt="photo: {{tags}}">
+	<a class="gallery__link" href="{{largeImageURL}}">
+		<img class="gallery__image" src="{{webformatURL}}" alt="photo: {{tags}}">
+	</a>
+
 </li>
 {{/each}}

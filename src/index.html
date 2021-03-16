@@ -20,25 +20,42 @@
   </head>
 
   <body>
-    <!-- search form -->
-    <form class="search-form" id="search-form">
-      <label for="searchQuery">IMAGES search</label>
-      <input
-        type="text"
-        name="query"
-        autocomplete="off"
-        id="searchQuery"
-        placeholder="Search images..."
-      />
-      <button type="submit" class="btn btn-primary mb-2">Search</button>
-    </form>
+    <div class="search-wrapper">
+      <div class="logo-container">
+        <div class="logo logo-first">
+          <span id="g">I</span>
+          <span id="o">m</span>
+          <span id="o1">a</span>
+          <span id="g1">g</span>
+          <span id="l">e</span>
+          <span id="e">s</span>
+          <div class="logo logo-second">search</div>
+        </div>
+      </div>
+      <!-- search form -->
+      <form class="search-form header" id="search-form">
+        <!-- <label for="searchQuery">IMAGES search</label> -->
+        <span class="search-icon material-icons"> search </span>
+        <input
+          class="searchbar"
+          type="text"
+          name="query"
+          autocomplete="off"
+          id="searchQuery"
+          placeholder="Search images..."
+        />
+        <button type="submit" class="search-icon material-icons search-button">
+          search
+        </button>
+      </form>
+    </div>
+    <!-- logo -->
 
     <!-- gallery -->
-    <div class="container">
-      <ul class="gallery">
-        <!-- Список <li> с карточками изображений -->
-      </ul>
-    </div>
+
+    <ul class="gallery">
+      <!-- Список <li> с карточками изображений -->
+    </ul>
 
     <!-- loadMore btn -->
     <button

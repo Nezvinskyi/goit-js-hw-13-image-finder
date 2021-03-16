@@ -3,9 +3,7 @@ import ImagesApiService from './js/apiService';
 import getRefs from './js/get-refs';
 import galleryTpl from './js/templates/gallery.hbs';
 import LoadMoreBtn from './js/components/load-more-btn';
-// import ImagePagination from './js/img-pagination/gallery';
 
-// const images = new ImagePagination('.gallery');
 const refs = getRefs();
 const imagesApiService = new ImagesApiService();
 const loadMoreBtn = new LoadMoreBtn({
@@ -27,16 +25,16 @@ loadMoreBtn.refs.button.addEventListener('click', fetchImages);
 
 async function onSearch(event) {
   event.preventDefault();
-  const searchQuery = event.currentTarget.elements.query.value;
+  const searchQuery = event.currentTarget.elements.query.value.trim();
 
   if (searchQuery === '') return;
 
   loadMoreBtn.show();
-
-  clearGallery();
   imagesApiService.resetPage();
   imagesApiService.query = searchQuery;
+  clearGallery();
   fetchImages();
+  repositionSearchForm();
 }
 
 async function fetchImages() {
@@ -52,4 +50,9 @@ function renderGallery(images) {
 
 function clearGallery() {
   refs.gallery.innerHTML = '';
+}
+
+function repositionSearchForm() {
+  refs.searchWrapper.classList.add('header');
+  refs.logoContainer.classList.add('header');
 }
