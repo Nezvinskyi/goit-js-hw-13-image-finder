@@ -31,4 +31,7 @@ export default class LoadMoreBtn {
   hide() {
     this.refs.button.classList.add('is-hidden');
   }
+  noContent() {
+    this.refs.button.disabled = true;
+  }
 }

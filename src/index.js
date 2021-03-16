@@ -6,8 +6,10 @@ import LoadMoreBtn from './js/components/load-more-btn';
 import * as basicLightbox from 'basiclightbox';
 import 'basiclightbox/dist/basicLightbox.min.css';
 import errorNotification from './js/components/notifications';
+import settings from './js/settings/index';
 
 const refs = getRefs();
+const { PER_PAGE } = settings;
 const imagesApiService = new ImagesApiService();
 const loadMoreBtn = new LoadMoreBtn({
   selector: '[data-action="load-more"]',
@@ -45,6 +47,9 @@ async function fetchImages() {
   const images = await imagesApiService.fetchImages();
   renderGallery(images);
   loadMoreBtn.enable();
+  if (images.length < PER_PAGE) {
+    loadMoreBtn.noContent();
+  }
 }
 
 function renderGallery(images) {
