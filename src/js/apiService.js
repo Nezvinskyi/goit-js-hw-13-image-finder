@@ -6,6 +6,7 @@ export default class ImagesApiService {
   constructor() {
     this.page = 1;
     this.searchQuery = '';
+    this.total = 0;
   }
   get query() {
     return this.searchQuery;
@@ -18,8 +19,9 @@ export default class ImagesApiService {
   async fetchImages() {
     const url = `${BASE_URL}?key=${API_KEY}&q=${this.searchQuery}&per_page=${PER_PAGE}&orientation=horizontal&page=${this.page}`;
     const response = await fetch(url);
-    const { hits } = await response.json();
+    const { hits, total } = await response.json();
     this.incrementPage();
+    this.total = total;
     return hits;
   }
 

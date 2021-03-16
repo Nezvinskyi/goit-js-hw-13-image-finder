@@ -5,7 +5,7 @@ import galleryTpl from './js/templates/gallery.hbs';
 import LoadMoreBtn from './js/components/load-more-btn';
 import * as basicLightbox from 'basiclightbox';
 import 'basiclightbox/dist/basicLightbox.min.css';
-import errorNotification from './js/components/notifications';
+import notification from './js/components/notifications';
 import settings from './js/settings/index';
 
 const refs = getRefs();
@@ -21,17 +21,22 @@ loadMoreBtn.refs.button.addEventListener('click', onLoadMore);
 refs.gallery.addEventListener('click', onGalleryClick);
 
 async function onSearch(event) {
-  event.preventDefault();
-  const searchQuery = event.currentTarget.elements.query.value.trim();
+  try {
+    event.preventDefault();
+    const searchQuery = event.currentTarget.elements.query.value.trim();
 
-  if (searchQuery === '') return;
+    if (searchQuery === '') return;
 
-  loadMoreBtn.show();
-  imagesApiService.resetPage();
-  imagesApiService.query = searchQuery;
-  clearGallery();
-  fetchImages();
-  repositionSearchForm();
+    loadMoreBtn.show();
+    imagesApiService.resetPage();
+    imagesApiService.query = searchQuery;
+    clearGallery();
+    await fetchImages();
+    repositionSearchForm();
+    notification.fetchStatus(imagesApiService.total);
+  } catch (error) {
+    notification.onError();
+  }
 }
 
 async function onLoadMore() {
@@ -54,7 +59,7 @@ async function fetchImages() {
 
 function renderGallery(images) {
   if (images.length === 0) {
-    errorNotification();
+    notification.onNotFoundError();
     return;
   }
   refs.gallery.insertAdjacentHTML('beforeend', galleryTpl(images));

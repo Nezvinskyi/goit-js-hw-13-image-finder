@@ -1,10 +1,24 @@
-import { error } from '@pnotify/core';
+import { error, notice } from '@pnotify/core';
 import '@pnotify/core/dist/BrightTheme.css';
 import '@pnotify/core/dist/PNotify.css';
 
-export default function onNotFoundError() {
+function onNotFoundError() {
   error({
     text: 'No images were found. Please try another search!',
     delay: 4000,
   });
 }
+function onError() {
+  notice({
+    text: "Ooops! Something's wrong! Please try again later",
+    delay: 4000,
+  });
+}
+
+function fetchStatus(totalHits) {
+  notice({
+    text: `We found ${totalHits} images. Click on image to enlarge or hit the button to load more!`,
+    delay: 4000,
+  });
+}
+export default { onNotFoundError, onError, fetchStatus };
