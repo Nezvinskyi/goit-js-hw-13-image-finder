@@ -33,7 +33,11 @@ async function onSearch(event) {
     clearGallery();
     await fetchImages();
     repositionSearchForm();
-    notification.fetchStatus(imagesApiService.total);
+    if (imagesApiService.total === 0) {
+      notification.onNotFoundError();
+    } else {
+      notification.fetchStatus(imagesApiService.total);
+    }
   } catch (error) {
     notification.onError();
   }
@@ -58,10 +62,10 @@ async function fetchImages() {
 }
 
 function renderGallery(images) {
-  if (images.length === 0) {
-    notification.onNotFoundError();
-    return;
-  }
+  // if (images.length === 0) {
+  //   notification.onNotFoundError();
+  //   return;
+  // }
   refs.gallery.insertAdjacentHTML('beforeend', galleryTpl(images));
 }
 
