@@ -55,7 +55,6 @@ async function fetchImages() {
 
   const tags = collectTags(imagesApiService.hits);
   renderTags(tags);
-  loadMoreBtn.enable();
 
   if (images.length < PER_PAGE) {
     notification.noMoreContent();
