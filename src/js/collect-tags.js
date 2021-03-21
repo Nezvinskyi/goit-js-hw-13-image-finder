@@ -1,6 +1,7 @@
-let tags = [];
+import dCarousel from 'd-carousel';
 
-export function collectTags(hits) {
+export default function collectTags(hits) {
+  let tags = [];
   // collects all tags from data and trims spaces
   hits.forEach(item => {
     const arr = item.tags.split(',');
@@ -17,3 +18,5 @@ export function collectTags(hits) {
   }, []);
   return tags;
 }
+
+// dCarousel(document.querySelector('.d-carousel'));

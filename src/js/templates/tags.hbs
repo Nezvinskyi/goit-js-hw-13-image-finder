@@ -1,3 +1,23 @@
-{{#each this}}
-<a>#{{this}}</a>
-{{/each}}
+<div class="d-carousel">
+	<div class="d-carousel__outer">
+		<div class="d-carousel__inner">
+			<div>
+				<ul class="d-carousel__ul">
+					{{#each this}}
+					<li class="d-carousel__item">#{{this}}</li>
+					{{/each}}
+				</ul>
+			</div>
+		</div>
+	</div>
+	<button class="d-carousel__prev">
+		<svg focusable="false" viewBox="0 0 24 24">
+			<path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path>
+		</svg>
+	</button>
+	<button class="d-carousel__next">
+		<svg focusable="false" viewBox="0 0 24 24">
+			<path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path>
+		</svg>
+	</button>
+</div>
