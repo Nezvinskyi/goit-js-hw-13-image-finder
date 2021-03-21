@@ -77,7 +77,24 @@ a:link {
 }
 .search-form:focus-within {
   box-shadow: 1px 1px 8px 1px #dcdcdc;
+
   outline: none;
+}
+
+.searchbar {
+  height: 45px;
+  border: none;
+  width: 500px;
+  font-size: 16px;
+  outline: none;
+}
+.search-icon {
+  align-self: center;
+  color: #9aa0a6;
+}
+.search-button {
+  border: none;
+  background-color: transparent;
 }
 
 .searchbar {
@@ -138,10 +155,108 @@ a:link {
 .stats {
   display: flex;
   justify-content: space-evenly;
+
 }
 
 .stats-item {
   display: flex;
   margin: 5px;
   color: #9aa0a6;
+}
+
+.d-carousel,
+.d-carousel * {
+  cursor: pointer;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.d-carousel {
+  position: relative;
+  overflow-y: hidden;
+}
+.d-carousel__outer {
+  overflow-x: hidden;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  position: relative;
+  white-space: nowrap;
+  margin-bottom: -1.5rem;
+}
+.d-carousel__outer::-webkit-scrollbar {
+  display: none;
+}
+.d-carousel__inner {
+  padding: 1rem 0;
+  display: inline-block;
+}
+.d-carousel__ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 0 0 1.5rem;
+  padding: 0;
+}
+.d-carousel__item {
+  font-size: 13px;
+  display: block;
+  margin-right: 10px;
+  padding: 7px 1.5rem;
+  border-radius: 30px;
+  border: 1px solid #dcdcdc;
+}
+
+.d-carousel__item:hover {
+  box-shadow: 1px 1px 8px 1px #dcdcdc;
+}
+.d-carousel__next,
+.d-carousel__prev {
+  position: absolute;
+  top: 50%;
+  cursor: pointer;
+  display: block;
+  background: rgba(255, 255, 255, 0.5);
+  border: 0;
+  border-radius: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  z-index: 2;
+}
+.d-carousel__next svg,
+.d-carousel__prev svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.d-carousel__next.disabled,
+.d-carousel__prev.disabled {
+  opacity: 0;
+  pointer-events: none;
+}
+.d-carousel__next {
+  right: 0.5rem;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+.d-carousel__prev {
+  left: 0.5rem;
+  -webkit-transform: translateY(-50%) rotate(-180deg);
+  transform: translateY(-50%) rotate(-180deg);
+}
+.d-carousel.init .d-carousel__next,
+.d-carousel.init .d-carousel__prev {
+  -webkit-transition: opacity 0.5s ease-in-out;
+  transition: opacity 0.5s ease-in-out;
+}
+@supports (color: #fff) {
+  .d-carousel__outer {
+    overflow-x: auto;
+  }
 }

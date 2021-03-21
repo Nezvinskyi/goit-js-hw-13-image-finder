@@ -6,6 +6,10 @@ import * as basicLightbox from 'basiclightbox';
 import 'basiclightbox/dist/basicLightbox.min.css';
 import notification from './js/components/notifications';
 import settings from './js/settings/index';
+import collectTags from './js/collect-tags';
+import dCarousel from 'd-carousel';
+
+import tagsTpl from './js/templates/tags.hbs';
 
 const refs = getRefs();
 const { PER_PAGE } = settings;
@@ -48,11 +52,32 @@ async function onLoadMore(entries) {
 async function fetchImages() {
   const images = await imagesApiService.fetchImages();
   renderGallery(images);
+
+  const tags = collectTags(imagesApiService.hits);
+  renderTags(tags);
+  loadMoreBtn.enable();
+
   if (images.length < PER_PAGE) {
     notification.noMoreContent();
     // refs.sentinel.textContent = 'no more content';
     observer.unobserve(refs.sentinel);
   }
+}
+
+function renderTags(tags) {
+  refs.tags.innerHTML = tagsTpl(tags);
+  dCarousel(document.querySelector('.d-carousel'));
+  refs.tags.addEventListener('click', onTagClick);
+}
+
+async function onTagClick(event) {
+  if (event.target.nodeName !== 'LI') return;
+  const searchQueryFromTag = event.target.textContent.substring(1);
+  imagesApiService.query = searchQueryFromTag;
+  imagesApiService.resetPage();
+  clearGallery();
+  await fetchImages();
+  refs.searchForm.elements.query.value = searchQueryFromTag;
 }
 
 function renderGallery(images) {

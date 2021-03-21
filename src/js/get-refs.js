@@ -5,5 +5,6 @@ export default function getRefs() {
     sentinel: document.getElementById('sentinel'),
     searchWrapper: document.querySelector('.search-wrapper'),
     logoContainer: document.querySelector('.logo-container'),
+    tags: document.querySelector('.tags'),
   };
 }
