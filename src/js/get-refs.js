@@ -5,5 +5,6 @@ export default function getRefs() {
     loadMoreBtn: document.querySelector('[data-action="load-more"]'),
     searchWrapper: document.querySelector('.search-wrapper'),
     logoContainer: document.querySelector('.logo-container'),
+    tags: document.querySelector('.tags'),
   };
 }

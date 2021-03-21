@@ -7,6 +7,7 @@ export default class ImagesApiService {
     this.page = 1;
     this.searchQuery = '';
     this.total = 0;
+    this.hits = [];
   }
   get query() {
     return this.searchQuery;
@@ -22,6 +23,7 @@ export default class ImagesApiService {
     const { hits, total } = await response.json();
     this.incrementPage();
     this.total = total;
+    this.hits = hits;
     return hits;
   }
 

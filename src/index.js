@@ -7,6 +7,8 @@ import * as basicLightbox from 'basiclightbox';
 import 'basiclightbox/dist/basicLightbox.min.css';
 import notification from './js/components/notifications';
 import settings from './js/settings/index';
+import { collectTags } from './js/collect-tags';
+import tagsTpl from './js/templates/tags.hbs';
 
 const refs = getRefs();
 const { PER_PAGE } = settings;
@@ -55,10 +57,18 @@ async function fetchImages() {
   loadMoreBtn.disable();
   const images = await imagesApiService.fetchImages();
   renderGallery(images);
+  const tags = collectTags(imagesApiService.hits);
+  renderTags(tags);
   loadMoreBtn.enable();
   if (images.length < PER_PAGE) {
     loadMoreBtn.noContent();
   }
+}
+
+function renderTags(tags) {
+  console.log(tagsTpl(tags));
+
+  refs.tags.innerHTML = tagsTpl(tags);
 }
 
 function renderGallery(images) {
