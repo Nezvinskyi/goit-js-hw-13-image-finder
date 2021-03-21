@@ -17,8 +17,14 @@ function onError() {
 
 function fetchStatus(totalHits) {
   notice({
-    text: `We found ${totalHits} images. Click on image to enlarge or hit the button to load more!`,
+    text: `We found ${totalHits} images. Click on image to enlarge or scroll down to see more!`,
     delay: 4000,
   });
 }
-export default { onNotFoundError, onError, fetchStatus };
+
+function noMoreContent() {
+  notice({
+    text: 'We have nothing more to hide! Please try another search!',
+  });
+}
+export default { onNotFoundError, onError, fetchStatus, noMoreContent };
