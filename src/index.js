@@ -6,7 +6,7 @@ import * as basicLightbox from 'basiclightbox';
 import 'basiclightbox/dist/basicLightbox.min.css';
 import notification from './js/components/notifications';
 import settings from './js/settings/index';
-import collectTags from './js/collect-tags';
+import tags from './js/collect-tags';
 import dCarousel from 'd-carousel';
 
 import tagsTpl from './js/templates/tags.hbs';
@@ -15,26 +15,31 @@ const refs = getRefs();
 const { PER_PAGE } = settings;
 const imagesApiService = new ImagesApiService();
 
-refs.searchForm.addEventListener('submit', onSearch);
+refs.searchForm.addEventListener('submit', onSearchClick);
 refs.gallery.addEventListener('click', onGalleryClick);
 
-async function onSearch(event) {
+function onSearchClick(event) {
+  event.preventDefault();
+  const searchQuery = event.currentTarget.elements.query.value.trim();
+  onSearch(searchQuery);
+}
+
+async function onSearch(searchQuery) {
   try {
-    event.preventDefault();
-    const searchQuery = event.currentTarget.elements.query.value.trim();
-
     if (searchQuery === '') return;
-
     imagesApiService.resetPage();
     imagesApiService.query = searchQuery;
     clearGallery();
+    tags.resetTags();
     await fetchImages();
     repositionSearchForm();
-    observer.observe(refs.sentinel);
     if (imagesApiService.total === 0) {
       notification.onNotFoundError();
+    } else if (imagesApiService.total <= PER_PAGE) {
+      notification.notTooManyStatus(imagesApiService.total);
     } else {
       notification.fetchStatus(imagesApiService.total);
+      observer.observe(refs.sentinel);
     }
   } catch (error) {
     notification.onError();
@@ -53,12 +58,12 @@ async function fetchImages() {
   const images = await imagesApiService.fetchImages();
   renderGallery(images);
 
-  const tags = collectTags(imagesApiService.hits);
-  renderTags(tags);
+  tags.collectTags(imagesApiService.hits);
+  const tagsForRender = tags.collectTags(imagesApiService.hits);
+  renderTags(tagsForRender);
 
-  if (images.length < PER_PAGE) {
+  if (imagesApiService.total > PER_PAGE && images.length < PER_PAGE) {
     notification.noMoreContent();
-    // refs.sentinel.textContent = 'no more content';
     observer.unobserve(refs.sentinel);
   }
 }
@@ -72,10 +77,7 @@ function renderTags(tags) {
 async function onTagClick(event) {
   if (event.target.nodeName !== 'LI') return;
   const searchQueryFromTag = event.target.textContent.substring(1);
-  imagesApiService.query = searchQueryFromTag;
-  imagesApiService.resetPage();
-  clearGallery();
-  await fetchImages();
+  onSearch(searchQueryFromTag);
   refs.searchForm.elements.query.value = searchQueryFromTag;
 }
 

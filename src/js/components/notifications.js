@@ -22,9 +22,23 @@ function fetchStatus(totalHits) {
   });
 }
 
+function notTooManyStatus(totalHits) {
+  notice({
+    text: `We found just ${totalHits} images. Click on image to enlarge or try another search!`,
+    delay: 4000,
+  });
+}
+
 function noMoreContent() {
   notice({
     text: 'We have nothing more to hide! Please try another search!',
+    delay: 4000,
   });
 }
-export default { onNotFoundError, onError, fetchStatus, noMoreContent };
+export default {
+  onNotFoundError,
+  onError,
+  fetchStatus,
+  noMoreContent,
+  notTooManyStatus,
+};

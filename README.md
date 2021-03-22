@@ -3,9 +3,9 @@ GoIT-JS-HW-13-image-finder
 tasks:
 
 - consolidate refs
-- refactor
-- notifications on onTagClick
 
+* refactor
+* notifications on onTagClick
 * carousel
 * infinite scroll
 * style tags (branch 'collect-tags')

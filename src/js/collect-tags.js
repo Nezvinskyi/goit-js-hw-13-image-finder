@@ -1,7 +1,6 @@
-import dCarousel from 'd-carousel';
+let tags = [];
 
-export default function collectTags(hits) {
-  let tags = [];
+function collectTags(hits) {
   // collects all tags from data and trims spaces
   hits.forEach(item => {
     const arr = item.tags.split(',');
@@ -9,14 +8,29 @@ export default function collectTags(hits) {
   });
   tags = tags.map(item => item.trim());
 
-  // removes duplicate entries
-  tags = tags.reduce((allItems, item) => {
-    if (allItems.indexOf(item) === -1) {
-      allItems.push(item);
-    }
-    return allItems;
-  }, []);
-  return tags;
+  // // creates frequency object
+  let frequency = {};
+  tags.forEach(item => {
+    frequency[item] = 0;
+  });
+
+  // //removes duplicates
+  const uniques = tags.filter(item => {
+    return ++frequency[item] == 1;
+  });
+
+  // //sort by frequency
+  const sortedUniques = uniques.sort(function (a, b) {
+    return frequency[b] - frequency[a];
+  });
+
+  const slicedSorted = sortedUniques.slice(0, 30);
+
+  return slicedSorted;
 }
 
-// dCarousel(document.querySelector('.d-carousel'));
+function resetTags() {
+  tags = [];
+}
+
+export default { resetTags, collectTags };
