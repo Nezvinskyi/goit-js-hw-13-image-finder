@@ -25,25 +25,25 @@ function onSearchClick(event) {
 }
 
 async function onSearch(searchQuery) {
-  try {
-    if (searchQuery === '') return;
-    imagesApiService.resetPage();
-    imagesApiService.query = searchQuery;
-    clearGallery();
-    tags.resetTags();
-    await fetchImages();
-    repositionSearchForm();
-    if (imagesApiService.total === 0) {
-      notification.onNotFoundError();
-    } else if (imagesApiService.total <= PER_PAGE) {
-      notification.notTooManyStatus(imagesApiService.total);
-    } else {
-      notification.fetchStatus(imagesApiService.total);
-      observer.observe(refs.sentinel);
-    }
-  } catch (error) {
-    notification.onError();
+  // try {
+  if (searchQuery === '') return;
+  imagesApiService.resetPage();
+  imagesApiService.query = searchQuery;
+  clearGallery();
+  tags.resetTags();
+  await fetchImages();
+  repositionSearchForm();
+  if (imagesApiService.total === 0) {
+    notification.onNotFoundError();
+  } else if (imagesApiService.total <= PER_PAGE) {
+    notification.notTooManyStatus(imagesApiService.total);
+  } else {
+    notification.fetchStatus(imagesApiService.total);
+    observer.observe(refs.sentinel);
   }
+  // } catch (error) {
+  //   notification.onError();
+  // }
 }
 
 async function onLoadMore(entries) {
@@ -57,10 +57,11 @@ async function onLoadMore(entries) {
 async function fetchImages() {
   const images = await imagesApiService.fetchImages();
   renderGallery(images);
-
-  tags.collectTags(imagesApiService.hits);
-  const tagsForRender = tags.collectTags(imagesApiService.hits);
-  renderTags(tagsForRender);
+  if (imagesApiService.total > 0) {
+    tags.collectTags(imagesApiService.hits);
+    const tagsForRender = tags.collectTags(imagesApiService.hits);
+    renderTags(tagsForRender);
+  }
 
   if (imagesApiService.total > PER_PAGE && images.length < PER_PAGE) {
     notification.noMoreContent();
