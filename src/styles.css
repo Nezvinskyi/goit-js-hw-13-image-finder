@@ -113,6 +113,47 @@ a:link {
   background-color: transparent;
 }
 
+/* loader */
+.loader {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+
+  border-top: 16px solid #4285f4;
+  border-right: 16px solid #ea4335;
+  border-bottom: 16px solid #fbbc05;
+  border-left: 16px solid #34a853;
+
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+
+  opacity: 0.5;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loader.hidden {
+  display: none;
+}
+
 /* gallery */
 .gallery {
   width: 1200px;
@@ -155,7 +196,6 @@ a:link {
 .stats {
   display: flex;
   justify-content: space-evenly;
-
 }
 
 .stats-item {

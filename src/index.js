@@ -59,8 +59,13 @@ async function onLoadMore(entries) {
 }
 
 async function fetchImages() {
+  console.log('spinner ON');
+  refs.loader.classList.remove('hidden');
   const images = await imagesApiService.fetchImages();
   renderGallery(images);
+  refs.loader.classList.add('hidden');
+  console.log('spinner OFF');
+
   if (imagesApiService.total > 0) {
     tags.collectTags(imagesApiService.hits);
     const tagsForRender = tags.collectTags(imagesApiService.hits);
