@@ -6,5 +6,6 @@ export default function getRefs() {
     searchWrapper: document.querySelector('.search-wrapper'),
     logoContainer: document.querySelector('.logo-container'),
     tags: document.querySelector('.tags'),
+    loader: document.querySelector('.loader'),
   };
 }

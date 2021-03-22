@@ -2,7 +2,6 @@ GoIT-JS-HW-13-image-finder
 
 TODO:
 - button: scroll to the top
-- spinner of fetch
 
 Description:
 Application for search and viewing of images by the keyword using Pixabay API
@@ -30,7 +29,9 @@ Features:
 - renders tags into google-style carousel (using dCarousel)
 - with every new fetch of data (on infinite scroll) values of tags are collected and rendered again
 
-6.click on tag: 
+6. click on tag: 
 -initiates new search with query from the tag (cleared from #symbol)
 
-7.click on the preview opens a large-size image in modal window (using basicLightbox)
+7. click on the preview opens a large-size image in modal window (using basicLightbox)
+
+8. animated spinner when fetching data
