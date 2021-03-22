@@ -14,6 +14,10 @@ import tagsTpl from './js/templates/tags.hbs';
 const refs = getRefs();
 const { PER_PAGE } = settings;
 const imagesApiService = new ImagesApiService();
+const options = {
+  rootMargin: '150px',
+};
+const observer = new IntersectionObserver(onLoadMore, options);
 
 refs.searchForm.addEventListener('submit', onSearchClick);
 refs.gallery.addEventListener('click', onGalleryClick);
@@ -25,25 +29,25 @@ function onSearchClick(event) {
 }
 
 async function onSearch(searchQuery) {
-  // try {
-  if (searchQuery === '') return;
-  imagesApiService.resetPage();
-  imagesApiService.query = searchQuery;
-  clearGallery();
-  tags.resetTags();
-  await fetchImages();
-  repositionSearchForm();
-  if (imagesApiService.total === 0) {
-    notification.onNotFoundError();
-  } else if (imagesApiService.total <= PER_PAGE) {
-    notification.notTooManyStatus(imagesApiService.total);
-  } else {
-    notification.fetchStatus(imagesApiService.total);
-    observer.observe(refs.sentinel);
+  try {
+    if (searchQuery === '') return;
+    imagesApiService.resetPage();
+    imagesApiService.query = searchQuery;
+    clearGallery();
+    tags.resetTags();
+    await fetchImages();
+    repositionSearchForm();
+    if (imagesApiService.total === 0) {
+      notification.onNotFoundError();
+    } else if (imagesApiService.total <= PER_PAGE) {
+      notification.notTooManyStatus(imagesApiService.total);
+    } else {
+      notification.fetchStatus(imagesApiService.total);
+      observer.observe(refs.sentinel);
+    }
+  } catch (error) {
+    notification.onError();
   }
-  // } catch (error) {
-  //   notification.onError();
-  // }
 }
 
 async function onLoadMore(entries) {
@@ -102,8 +106,3 @@ function onGalleryClick(event) {
   const instance = basicLightbox.create(`<img src="${largeImgUrl}" >`);
   instance.show();
 }
-
-const options = {
-  rootMargin: '150px',
-};
-const observer = new IntersectionObserver(onLoadMore, options);
